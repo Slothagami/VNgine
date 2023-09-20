@@ -18,7 +18,7 @@ window.addEventListener("load", () => {
         }
     })
 
-    load_scene("1")
+    load_scene("intro")
 
     requestAnimationFrame(update)
 })
@@ -46,7 +46,7 @@ function load_scene(name) {
 class Scene {
     constructor(script) {
         this.actions       = this.parse_script(script)
-        this.characters    = {"": {animspeed: .5, color: "white"}} // include the protagonist as a character
+        this.characters    = {"": {animtime: .5, color: "white"}} // include the protagonist as a character
         this.dialog        = document.querySelector("#text")
         this.dialog_box    = document.querySelector("#dialog")
         this.name          = document.querySelector("#name")
@@ -142,12 +142,12 @@ class Scene {
                 args = img
             }
 
-            if(/\d+(\.\d+)?/.test(args) && property != "animspeed") {
+            if(/\d+(\.\d+)?/.test(args) && property != "animtime") {
                 // of the data is a number
                 if(this.characters[name].hasOwnProperty(property)) {
                     args = new AnimatedValue(
                         this.characters[name][property],
-                        args, this.characters[name].animspeed || .5
+                        args, this.characters[name].animtime || .5
                     )
                 }
             }
