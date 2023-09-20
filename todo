@@ -1,0 +1,6 @@
+- make characters as <image> instead of on canvas
+
+- add bgm command and crossfade looping bgm
+- add playsound command
+- background crossfade
+- add choice command that loads one of several scene options depending on input
