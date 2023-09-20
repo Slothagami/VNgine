@@ -1,4 +1,4 @@
-- make characters as <image> instead of on canvas
+- preload images
 
 - add bgm command and crossfade looping bgm
 - add playsound command

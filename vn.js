@@ -59,19 +59,10 @@ class Scene {
     draw() {
         c.clearRect(0, 0, canv.width, canv.height)
 
-        // draw characters
+        // move characters
         Object.values(this.characters).forEach(data => {
             if(data.hasOwnProperty("image")) {
-                // scale so the height of the image matches the window
-                let scale = data.image.height / canv.height
-                c.drawImage(
-                    data.image, 
-                    canv.width  * data.x - (data.image.width/scale) /2, 
-                    canv.height * data.y - canv.height,
-
-                    data.image.width / scale,
-                    data.image.height / scale
-                )
+                data.image.style.left = data.x * 100 + "%"
             }
         })
 
@@ -137,9 +128,14 @@ class Scene {
             this.characters[name] ??= {x: .5, y: 1, color: "white"}
 
             if(property == "image") {
+                this.remove_character_img(name)
+
                 let img = new Image()
                 img.src = `./characters/${name}/${args}`
                 args = img
+                img.className = "character-img"
+
+                document.body.appendChild(img)
             }
 
             if(/\d+(\.\d+)?/.test(args) && property != "animtime") {
@@ -158,6 +154,14 @@ class Scene {
         }
     }
 
+    remove_character_img(character) {
+        if(this.characters[character].hasOwnProperty("image")) {
+            // remove old image
+            document.body.removeChild(this.characters[character].image)
+            delete this.characters[character].image
+        }
+    }
+
     // Actions 
     background(image) {
         document.body.style.backgroundImage = `url("./backgrounds/${image}")`
@@ -168,6 +172,6 @@ class Scene {
     }
 
     exit(character) {
-        delete this.characters[character].image
+        this.remove_character_img(character)
     }
 }
