@@ -18,6 +18,7 @@ window.addEventListener("load", () => {
         }
     })
 
+    scene = new Scene()
     load_scene("intro")
 
     requestAnimationFrame(update)
@@ -39,21 +40,24 @@ function load_scene(name) {
 
     document.body.appendChild(script)
     script.addEventListener("load", () => {
-        scene = new Scene(SCRIPT)
+        // scene = new Scene(SCRIPT)
+        scene.actions = scene.parse_script(SCRIPT)
+        scene.next()
     })
 }
 
 class Scene {
-    constructor(script) {
-        this.actions       = this.parse_script(script)
+    constructor() {
         this.characters    = {"": {animtime: .5, color: "white"}} // include the protagonist as a character
         this.dialog        = document.querySelector("#text")
         this.dialog_box    = document.querySelector("#dialog")
         this.name          = document.querySelector("#name")
+        this.options       = document.querySelector("#options")
         this.target_text   = ""
         this.visible_chars = 0
 
-        this.next()
+        this.bgm_audio = new Audio()
+        this.bgm_audio.loop = true
     }
 
     draw() {
@@ -75,9 +79,16 @@ class Scene {
         let lines = scene_str.split("\n")
         let actions = []
         lines.forEach(line => {
+            line = line.trim()
             if(line != "") {
-                let args = line.trim().split(" ")
-                let command = args.shift()
+                let args, command
+                if(!line.startsWith('"')) {
+                    args    = line.split(" ")
+                    command = args.shift()
+                } else {
+                    args = [line]
+                    command = "option"
+                }
                 actions.push({ command, args })
             }
         })
@@ -94,14 +105,32 @@ class Scene {
         let action = this.actions.shift()
         if(action == undefined) return true
 
-        // if its an established action
         if(typeof this[action.command] == "function") {
+            // if its a defined action
             this[action.command](...action.args)
             return false
         } else {
             // if its a character name
             return this.character(action.command, action.args)
         }
+    }
+
+    option(args) {
+        let regex   = /(\".+\") (.+)/
+        let groups  = regex.exec(args)
+        let message = groups[1]
+        let scene   = groups[2]
+
+        // create option element
+        let option = document.createElement("div")
+            option.className = "dialog-option"
+            option.innerText = message
+
+        option.addEventListener("click", () => {
+            this.scene(scene)
+        })
+
+        this.options.appendChild(option)
     }
 
     character(name, args) {
@@ -125,7 +154,13 @@ class Scene {
             // changing character data
             let property = args.shift()
             args = args.join(" ")
-            this.characters[name] ??= {x: .5, y: 1, color: "white"}
+
+            if(!this.characters.hasOwnProperty(name)) {
+                this.characters[name] = {x: .5, y: 1, color: "white"}
+
+                // preload images?
+            }
+
 
             if(property == "image") {
                 this.remove_character_img(name)
@@ -168,10 +203,129 @@ class Scene {
     }
 
     scene(name) {
+        this.options.innerHTML = ""
         load_scene(name)
     }
 
     exit(character) {
         this.remove_character_img(character)
     }
+
+    dialogbox(position) {
+        let dbox  = this.dialog_box.style
+        let opbox = this.options.style
+
+        dbox.display = "unset"
+        // inset: top right bottom left
+
+        switch(position) {
+            case "default":
+            case "bottom":
+                opbox.width = "100%"
+                opbox.inset = "50% 0 unset unset"
+
+                dbox.width  = "100%"
+                dbox.height = "22vh"
+                dbox.inset  = "auto auto 0 0"
+                break
+
+            case "low":
+                opbox.width = "100%"
+                opbox.inset = "50% 0 unset unset"
+
+                dbox.width   = "100%"
+                dbox.height  = "8vh"
+                dbox.inset   = "auto auto 0 0"
+                dbox.display = "flex"
+                break
+
+            case "hidden":
+                dbox.display = "none"
+                break
+
+            case "left":
+                opbox.width = "63%"
+                opbox.inset = "50% 0 unset unset"
+
+                dbox.width  = "37%"
+                dbox.height = "100vh"
+                dbox.inset   = "0 63%"
+                break
+
+            case "right":
+                opbox.width = "63%"
+                opbox.inset = "50% 37%"
+
+                dbox.width  = "37%"
+                dbox.height = "100vh"
+                dbox.inset   = "0"
+                break
+
+            case "bottomleft":
+                opbox.width = "100%"
+                opbox.inset = "50% 0 unset unset"
+
+                dbox.width  = "37%"
+                dbox.height = "22vh"
+                dbox.inset   = "auto auto 0 0"
+                break
+
+            case "bottomright":
+                opbox.width = "100%"
+                opbox.inset = "50% 0 unset unset"
+
+                dbox.width  = "37%"
+                dbox.height = "22vh"
+                dbox.inset   = "auto 0 0 auto"
+                break
+
+            case "center":
+                dbox.width  = "100%"
+                dbox.height = "80vh"
+                dbox.inset  = "10% 0"
+                break
+        }
+    }
+
+    sound(file) {
+        let sound = new Audio("./audio/sounds/" + file)
+            sound.play()
+    }
+
+    bgm(file) {
+        if(file == "stop" || file == "none") {
+            this.bgm_audio.pause()
+        }
+        // TODO: perform crossfade
+        this.bgm_audio.src = "./audio/music/" + file
+        this.bgm_audio.currentTime = 0
+        this.bgm_audio.play()
+    }
+}
+
+const lerp = (a, b, p) => (b-a)*p + a
+
+
+class CrossFade {
+    constructor(target, start, stop, time) {
+        this.target = target
+        this.start  = start
+        this.stop   = stop
+        this.time   = time
+
+        this.interval = 1/20
+        this.progress = 0
+        this.intervals = time * this.interval
+        this.interval_ms = this.interval
+
+        setTimeout(this.update, this.interval_ms, target, this)
+    }
+    update(target, self) {
+        self.progress += self.interval
+        target(lerp(self.start, self.stop, self.progress / self.intervals))
+
+        if(self.progress <= self.intervals) {
+            setTimeout(self.update, self.interval_ms, self)
+        }
+    }   
 }

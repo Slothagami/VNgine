@@ -49,3 +49,20 @@ crossfades to a new background. filepath starts from the `backgrounds/` folder
 ---
 ## scene [file]
 loads a new scene. filepath starts from the `scenes/` folder. omit the file extension
+
+---
+## dialogbox [position]
+sets the dialog box position, supported values are:
+- `default` or `bottom`, `low`, `hidden`, `left`, `right`, `bottomleft`, `bottomright`, `center`
+
+---
+## sound [file]
+play a sound effect, filepath starts from the `audio/sounds/` folder
+
+---
+## bgm [file]
+crossfades to a new bgm track, filepath starts from `audio/music/`
+
+---
+## "[text option]" [scene name]
+presents an option to the player and determines the scene to load if that option is picked, use many of these in sequence to list dialog options and their corresponding scenes to progress to.

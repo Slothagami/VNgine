@@ -1,6 +1,13 @@
 - preload images
-
-- add bgm command and crossfade looping bgm
-- add playsound command
+- crossfade bgm
 - background crossfade
-- add choice command that loads one of several scene options depending on input
+- add imcrimental dialog that doesn't clear the box (for large boxes)
+
+
+## story ideas 
+- emotions alter the world 
+    - how?
+- dialogue choices have a time limit in tense moments (linked to music beats?)
+
+- evolving musical score
+- tone of the music influenced by choices and sets atmosphere
