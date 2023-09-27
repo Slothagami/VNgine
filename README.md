@@ -53,7 +53,7 @@ loads a new scene. filepath starts from the `scenes/` folder. omit the file exte
 ---
 ## dialogbox [position]
 sets the dialog box position, supported values are:
-- `default` or `bottom`, `low`, `hidden`, `left`, `right`, `bottomleft`, `bottomright`, `center`
+- `default` or `bottom` or `normal`, `low`, `hidden`, `left`, `right`, `bottomleft`, `bottomright`, `center` or `large`
 
 ---
 ## sound [file]

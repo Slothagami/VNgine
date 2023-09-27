@@ -82,12 +82,17 @@ class Scene {
             line = line.trim()
             if(line != "") {
                 let args, command
-                if(!line.startsWith('"')) {
-                    args    = line.split(" ")
-                    command = args.shift()
-                } else {
+                if(line.startsWith('"')) {
                     args = [line]
                     command = "option"
+
+                } else if(line.startsWith(">")) {
+                    args = [line.replace("> ", "")]
+                    command = "extend" // extend existing dialog
+
+                } else {
+                    args    = line.split(" ")
+                    command = args.shift()
                 }
                 actions.push({ command, args })
             }
@@ -107,8 +112,7 @@ class Scene {
 
         if(typeof this[action.command] == "function") {
             // if its a defined action
-            this[action.command](...action.args)
-            return false
+            return this[action.command](...action.args) || false
         } else {
             // if its a character name
             return this.character(action.command, action.args)
@@ -189,6 +193,12 @@ class Scene {
         }
     }
 
+    extend(dialog) {
+        this.visible_chars = this.target_text.length
+        this.target_text += "\n\n" + dialog
+        return true
+    }
+
     remove_character_img(character) {
         if(this.characters[character].hasOwnProperty("image")) {
             // remove old image
@@ -221,6 +231,7 @@ class Scene {
         switch(position) {
             case "default":
             case "bottom":
+            case "normal":
                 opbox.width = "100%"
                 opbox.inset = "50% 0 unset unset"
 
@@ -243,7 +254,7 @@ class Scene {
                 dbox.display = "none"
                 break
 
-            case "left":
+            case "right":
                 opbox.width = "63%"
                 opbox.inset = "50% 0 unset unset"
 
@@ -252,7 +263,7 @@ class Scene {
                 dbox.inset   = "0 63%"
                 break
 
-            case "right":
+            case "left":
                 opbox.width = "63%"
                 opbox.inset = "50% 37%"
 
@@ -280,6 +291,7 @@ class Scene {
                 break
 
             case "center":
+            case "large":
                 dbox.width  = "100%"
                 dbox.height = "80vh"
                 dbox.inset  = "10% 0"
