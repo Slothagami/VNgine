@@ -1,6 +1,5 @@
-- preload images
 - crossfade bgm
-- background crossfade
+- update scene in middle of transition, not on fade start
 
 ## story ideas 
 - emotions alter the world 

@@ -1,10 +1,5 @@
-var canv, c, scene
+var scene
 window.addEventListener("load", () => {
-    canv = document.querySelector("canvas")
-    c    = canv.getContext("2d")
-
-    resize()
-    window.addEventListener("resize", resize)
     document.body.addEventListener("keydown", e => {
         if(e.key == "h") {
             if(scene.dialog_box.style.display == "none") {
@@ -29,11 +24,6 @@ function update() {
     requestAnimationFrame(update)
 }
 
-function resize() {
-    canv.width  = window.innerWidth
-    canv.height = window.innerHeight
-}
-
 function load_scene(name) {
     let script = document.createElement("script")
         script.src = `./scenes/${name}.js`
@@ -53,16 +43,17 @@ class Scene {
         this.dialog_box    = document.querySelector("#dialog")
         this.name          = document.querySelector("#name")
         this.options       = document.querySelector("#options")
+        this.overlay       = document.querySelector("#overlay")
         this.target_text   = ""
         this.visible_chars = 0
+
+        this.fade = 1
 
         this.bgm_audio = new Audio()
         this.bgm_audio.loop = true
     }
 
     draw() {
-        c.clearRect(0, 0, canv.width, canv.height)
-
         // move characters
         Object.values(this.characters).forEach(data => {
             if(data.hasOwnProperty("image")) {
@@ -209,7 +200,8 @@ class Scene {
 
     // Actions 
     background(image) {
-        document.body.style.backgroundImage = `url("./backgrounds/${image}")`
+        // document.body.style.backgroundImage = `url("./backgrounds/${image}")`
+        this.cross_fade_bg(image)
     }
 
     scene(name) {
@@ -233,7 +225,7 @@ class Scene {
             case "bottom":
             case "normal":
                 opbox.width = "100%"
-                opbox.inset = "50% 0 unset unset"
+                opbox.inset = "50% 0 auto auto"
 
                 dbox.width  = "100%"
                 dbox.height = "22vh"
@@ -313,31 +305,48 @@ class Scene {
         this.bgm_audio.currentTime = 0
         this.bgm_audio.play()
     }
+
+    // other
+    cross_fade_bg(new_bg, time = 1) {
+        if(document.body.style.backgroundImage != "") {
+            new Fade(time/2, perc => {
+                    scene.overlay.style.opacity = 100 * perc + "%"
+                }, () => {
+                    document.body.style.backgroundImage = `url("./backgrounds/${new_bg}")`
+                    new Fade(time/2, perc => {
+                        scene.overlay.style.opacity = 100 * (1 - perc) + "%"
+                    })
+                }
+            )
+        } else {
+            // first background, just fade in
+            document.body.style.backgroundImage = `url("./backgrounds/${new_bg}")`
+            new Fade(time/2, perc => {
+                scene.overlay.style.opacity = 100 * (1 - perc) + "%"
+            })
+        }
+    }
 }
 
 const lerp = (a, b, p) => (b-a)*p + a
 
-
-class CrossFade {
-    constructor(target, start, stop, time) {
-        this.target = target
-        this.start  = start
-        this.stop   = stop
-        this.time   = time
-
-        this.interval = 1/20
-        this.progress = 0
-        this.intervals = time * this.interval
-        this.interval_ms = this.interval
-
-        setTimeout(this.update, this.interval_ms, target, this)
+class Fade {
+    constructor(seconds, func, onend=()=>{}, interval=24) {
+        this.func = func
+        this.onend = onend
+        this.count = 0
+        this.max_count = interval * seconds
+        this.interval = 1000 / interval
+        setTimeout(() => {this.update()}, this.interval)
     }
-    update(target, self) {
-        self.progress += self.interval
-        target(lerp(self.start, self.stop, self.progress / self.intervals))
 
-        if(self.progress <= self.intervals) {
-            setTimeout(self.update, self.interval_ms, self)
+    update() {
+        this.count++
+        this.func(this.count / this.max_count)
+        if(this.count < this.max_count) {
+            setTimeout(() => {this.update()}, this.interval)
+        } else {
+            this.onend()
         }
-    }   
+    }
 }
