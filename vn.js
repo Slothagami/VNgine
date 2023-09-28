@@ -26,7 +26,7 @@ function update() {
 
 function load_scene(name) {
     let script = document.createElement("script")
-        script.src = `./scenes/${name}.js`
+        script.src = `./assets/scenes/${name}.js`
 
     document.body.appendChild(script)
     script.addEventListener("load", () => {
@@ -161,7 +161,7 @@ class Scene {
                 this.remove_character_img(name)
 
                 let img = new Image()
-                img.src = `./characters/${name}/${args}`
+                img.src = `./assets/characters/${name}/${args}`
                 args = img
                 img.className = "character-img"
 
@@ -200,7 +200,6 @@ class Scene {
 
     // Actions 
     background(image) {
-        // document.body.style.backgroundImage = `url("./backgrounds/${image}")`
         this.cross_fade_bg(image)
         return true
     }
@@ -293,7 +292,7 @@ class Scene {
     }
 
     sound(file) {
-        let sound = new Audio("./audio/sounds/" + file)
+        let sound = new Audio("./assets/audio/sounds/" + file)
             sound.play()
     }
 
@@ -308,8 +307,10 @@ class Scene {
                     this.bgm_audio.volume = 1 - perc
                 }, () => {
                     // then start new track
-                    this.play_track(new_song)
-                    this.bgm_audio.volume = 1
+                    setTimeout(() => {
+                        this.play_track(new_song)
+                        this.bgm_audio.volume = 1
+                    }, 500)
                 }
             )
         } else {
@@ -319,7 +320,7 @@ class Scene {
 
     play_track(name) {
         if(name == "none" || name == "stop") this.bgm_audio.pause()
-        this.bgm_audio.src = "./audio/music/" + name
+        this.bgm_audio.src = "./assets/audio/music/" + name
         this.bgm_audio.currentTime = 0
         this.bgm_audio.play()
     }
@@ -332,7 +333,7 @@ class Scene {
                     scene.overlay.style.opacity = 100 * perc + "%"
                 }, () => {
                     // switch to and fade in new scene
-                    document.body.style.backgroundImage = `url("./backgrounds/${new_bg}")`
+                    document.body.style.backgroundImage = `url("./assets/backgrounds/${new_bg}")`
                     scene.next()
                     new Fade(time/2, perc => {
                         scene.overlay.style.opacity = 100 * (1 - perc) + "%"
@@ -341,7 +342,7 @@ class Scene {
             )
         } else {
             // first background, just fade in
-            document.body.style.backgroundImage = `url("./backgrounds/${new_bg}")`
+            document.body.style.backgroundImage = `url("./assets/backgrounds/${new_bg}")`
             new Fade(time/2, perc => {
                 scene.overlay.style.opacity = 100 * (1 - perc) + "%"
             })

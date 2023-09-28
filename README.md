@@ -44,11 +44,11 @@ removes the characters image property so they are not on screen anymore. they re
 
 ---
 ## background [path]
-crossfades to a new background. filepath starts from the `backgrounds/` folder
+crossfades to a new background. filepath starts from the `assets/backgrounds/` folder
 
 ---
 ## scene [file]
-loads a new scene. filepath starts from the `scenes/` folder. omit the file extension
+loads a new scene. filepath starts from the `assets/scenes/` folder. omit the file extension
 
 ---
 ## dialogbox [position]
@@ -64,11 +64,11 @@ sets the dialog box position, supported values are:
 
 ---
 ## sound [file]
-play a sound effect, filepath starts from the `audio/sounds/` folder
+play a sound effect, filepath starts from the `assets/audio/sounds/` folder
 
 ---
 ## bgm [file]
-fades out current music and starts a new bgm track, filepath starts from `audio/music/`
+fades out current music and starts a new bgm track, filepath starts from `assets/audio/music/`
 
 ---
 ## "[text option]" [scene name]
