@@ -53,7 +53,14 @@ loads a new scene. filepath starts from the `scenes/` folder. omit the file exte
 ---
 ## dialogbox [position]
 sets the dialog box position, supported values are:
-- `default` or `bottom` or `normal`, `low`, `hidden`, `left`, `right`, `bottomleft`, `bottomright`, `center` or `large`
+- `default`, `bottom` or `normal`
+- `low`
+- `hidden`
+- `left`
+- `right`
+- `bottomleft`
+- `bottomright`
+- `center` or `large`
 
 ---
 ## sound [file]
@@ -61,7 +68,7 @@ play a sound effect, filepath starts from the `audio/sounds/` folder
 
 ---
 ## bgm [file]
-crossfades to a new bgm track, filepath starts from `audio/music/`
+fades out current music and starts a new bgm track, filepath starts from `audio/music/`
 
 ---
 ## "[text option]" [scene name]
