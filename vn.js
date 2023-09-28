@@ -202,6 +202,7 @@ class Scene {
     background(image) {
         // document.body.style.backgroundImage = `url("./backgrounds/${image}")`
         this.cross_fade_bg(image)
+        return true
     }
 
     scene(name) {
@@ -313,6 +314,7 @@ class Scene {
                     scene.overlay.style.opacity = 100 * perc + "%"
                 }, () => {
                     document.body.style.backgroundImage = `url("./backgrounds/${new_bg}")`
+                    scene.next()
                     new Fade(time/2, perc => {
                         scene.overlay.style.opacity = 100 * (1 - perc) + "%"
                     })
