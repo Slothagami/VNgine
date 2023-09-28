@@ -298,21 +298,40 @@ class Scene {
     }
 
     bgm(file) {
-        if(file == "stop" || file == "none") {
-            this.bgm_audio.pause()
+        this.cross_fade_bgm(file)
+    }
+
+    cross_fade_bgm(new_song, time=4) {
+        if(this.bgm_audio.src != "") {
+            new Fade(time, perc => {
+                    // fade out current track
+                    this.bgm_audio.volume = 1 - perc
+                }, () => {
+                    // then start new track
+                    this.play_track(new_song)
+                    this.bgm_audio.volume = 1
+                }
+            )
+        } else {
+            this.play_track(new_song)
         }
-        // TODO: perform crossfade
-        this.bgm_audio.src = "./audio/music/" + file
+    }
+
+    play_track(name) {
+        if(name == "none" || name == "stop") this.bgm_audio.pause()
+        this.bgm_audio.src = "./audio/music/" + name
         this.bgm_audio.currentTime = 0
         this.bgm_audio.play()
     }
 
     // other
-    cross_fade_bg(new_bg, time = 1) {
+    cross_fade_bg(new_bg, time=1) {
         if(document.body.style.backgroundImage != "") {
             new Fade(time/2, perc => {
+                    // fade out current scene
                     scene.overlay.style.opacity = 100 * perc + "%"
                 }, () => {
+                    // switch to and fade in new scene
                     document.body.style.backgroundImage = `url("./backgrounds/${new_bg}")`
                     scene.next()
                     new Fade(time/2, perc => {
