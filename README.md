@@ -23,11 +23,22 @@ scene next_scene
 <br />
 <br />
 
+# Folder structure
+```
+/assets
+    /audio
+        /music
+        /sounds
+    /backgrounds
+    /characters
+    /scenes
+```
+
 # List of commands
 ---
 ## [character] [property] [value]
 sets a property of the characteres data. adds the character to the scene if they're not there already. supported properties include:
-- `image`: filepath starting from that characters directory
+- `image`: filepath starting from `assets/characters` 
 - `x`: float (percentage of screen width) default = 0.5
 - `y`: float (percentage of screen height) default = 1
 - `color`: CSS Color string, color of the characters name in the dialog box
