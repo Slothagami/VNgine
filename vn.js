@@ -58,6 +58,10 @@ class Scene {
         Object.values(this.characters).forEach(data => {
             if(data.hasOwnProperty("image")) {
                 data.image.style.left = data.x * 100 + "%"
+                data.image.style.top  = data.y * 100 + "%"
+                if(data.hasOwnProperty("scale")) {
+                    data.image.style.height = data.scale * 100 + "%"
+                }
             }
         })
 
@@ -151,7 +155,7 @@ class Scene {
             args = args.join(" ")
 
             if(!this.characters.hasOwnProperty(name)) {
-                this.characters[name] = {x: .5, y: 1, color: "white"}
+                this.characters[name] = {x: .5, y: 0, color: "white", scale: 1}
 
                 // preload images?
             }
