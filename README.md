@@ -41,6 +41,7 @@ sets a property of the characteres data. adds the character to the scene if they
 - `image`: filepath starting from `assets/characters` 
 - `x`: float (percentage of screen width) default = 0.5
 - `y`: float (percentage of screen height) default = 1
+- `scale`: float (default = 1)
 - `color`: CSS Color string, color of the characters name in the dialog box
 - `animtime`: number of seconds to complete an animation (such as moving to a new position)
 
