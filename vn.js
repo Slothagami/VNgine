@@ -232,7 +232,7 @@ class Scene {
                 opbox.inset = "50% 0 auto auto"
 
                 dbox.width  = "100%"
-                dbox.height = "22vh"
+                dbox.height = "20vh"
                 dbox.inset  = "auto auto 0 0"
                 break
 

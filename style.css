@@ -26,7 +26,7 @@ body {
 #dialog, #options {
     position: fixed;
     bottom: 0;
-    height: 22vh;
+    height: 20vh;
     width: 100%;
     background-color: #0000009a;
     color: white;
