@@ -65,8 +65,15 @@ class Scene {
             }
         })
 
-        // update text
-        this.visible_chars++
+        this.update_text()
+    }
+
+    update_text() {
+        let current_char = this.target_text.charAt(this.visible_chars-1)
+        let punctuation = ".,:;!?".split("")
+        let inc = punctuation.includes(current_char)? .04: 1
+
+        this.visible_chars += inc
         this.dialog.innerText = this.target_text.substring(0, this.visible_chars)
     }
 
