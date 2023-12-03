@@ -80,8 +80,9 @@ class Scene {
             ":": .05,
             ";": .1,
         }
+        let ignore_list = Object.keys(punctuation) + ['"']
 
-        if(next_char != '"') {
+        if(!ignore_list.includes(next_char)) {
             this.visible_chars += punctuation[current_char] || .7
         } else {
             this.visible_chars++
