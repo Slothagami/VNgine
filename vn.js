@@ -70,15 +70,22 @@ class Scene {
 
     update_text() {
         let current_char = this.target_text.charAt(this.visible_chars-1)
+        let next_char    = this.target_text.charAt(this.visible_chars)
         let punctuation = {
+            ".": .025,
+            "?": .025,
+            "!": .025,
             ",": .05,
             "-": .05,
             ":": .05,
             ";": .1,
-            ".": .025,
         }
 
-        this.visible_chars += punctuation[current_char] || .7
+        if(next_char != '"') {
+            this.visible_chars += punctuation[current_char] || .7
+        } else {
+            this.visible_chars++
+        }
         this.dialog.innerText = this.target_text.substring(0, this.visible_chars)
     }
 
