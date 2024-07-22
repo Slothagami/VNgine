@@ -1,5 +1,4 @@
 var scene
-var name = "slotha"
 var flags = {}
 window.addEventListener("load", () => {
     document.body.addEventListener("keydown", e => {
@@ -16,8 +15,7 @@ window.addEventListener("load", () => {
     })
 
     scene = new Scene()
-    // load_scene("intro") 
-    load_scene("come_in") 
+    load_scene(game_start) 
 
     requestAnimationFrame(update)
 })
