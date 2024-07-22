@@ -34,10 +34,12 @@ scene next_scene
     /scenes
 ```
 
-# List of commands
+# Commands
+you can use the keyword `<name>` in any command to substitute it for the player's chosen name.
+
 ---
 ## [character] [property] [value]
-sets a property of the characteres data. adds the character to the scene if they're not there already. supported properties include:
+sets a property of the character's data. adds the character to the scene if they're not there already. supported properties include:
 - `image`: filepath starting from `assets/characters` 
 - `x`: float (percentage of screen width) default = 0.5
 - `y`: float (percentage of screen height) default = 1
@@ -52,7 +54,7 @@ Character speaking a line. both arguments are optional. a blank string `: [dialo
 
 ---
 ## exit [character]
-removes the characters image property so they are not on screen anymore. they remain in the scene in case they reappear.
+removes the characters image property so they are not on screen anymore. their data remains in the scene in case they reappear.
 
 ---
 ## background [path]

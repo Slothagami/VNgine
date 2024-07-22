@@ -1,4 +1,5 @@
 var scene
+var name = "slotha"
 window.addEventListener("load", () => {
     document.body.addEventListener("keydown", e => {
         if(e.key == "h") {
@@ -96,6 +97,7 @@ class Scene {
         lines.forEach(line => {
             line = line.trim()
             if(line != "") {
+                line = line.replaceAll("<name>", name) // use player's name
                 let args, command
                 if(line.startsWith('"')) {
                     args = [line]
