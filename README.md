@@ -35,7 +35,8 @@ scene next_scene
 ```
 
 # Commands
-you can use the keyword `<name>` in any command to substitute it for the player's chosen name.
+- you can use the keyword `<name>` in any command to substitute it for the player's chosen name.
+- you can specify comments with `//`
 
 ---
 ## [character] [property] [value]
@@ -85,5 +86,7 @@ play a sound effect, filepath starts from the `assets/audio/sounds/` folder
 fades out current music and starts a new bgm track, filepath starts from `assets/audio/music/`
 
 ---
-## "[text option]" [scene name]
+## "[text option]" [scene name] [flag?] [amount=1?]
 presents an option to the player and determines the scene to load if that option is picked, use many of these in sequence to list dialog options and their corresponding scenes to progress to.
+- flag: (string) name of global flag, will be created if it doesn't exist, initializes to 0
+- ammount: (float/bool) if given a float, incriments the flag value by that amount, if given a float, sets the flag to match.

@@ -1,5 +1,6 @@
 var scene
 var name = "slotha"
+var flags = {}
 window.addEventListener("load", () => {
     document.body.addEventListener("keydown", e => {
         if(e.key == "h") {
@@ -15,7 +16,8 @@ window.addEventListener("load", () => {
     })
 
     scene = new Scene()
-    load_scene("intro")
+    // load_scene("intro") 
+    load_scene("come_in") 
 
     requestAnimationFrame(update)
 })
@@ -73,13 +75,14 @@ class Scene {
         let current_char = this.target_text.charAt(this.visible_chars-1)
         let next_char    = this.target_text.charAt(this.visible_chars)
         let punctuation = {
-            ".": .025,
-            "?": .025,
-            "!": .025,
+            ".": .04,
+            "?": .04,
+            "!": .04,
             ",": .05,
             "-": .05,
             ":": .05,
             ";": .1,
+            "*":  1, // so it works properly when an asterisked message has a period
         }
         let ignore_list = Object.keys(punctuation) + ['"']
 
@@ -99,6 +102,10 @@ class Scene {
             if(line != "") {
                 line = line.replaceAll("<name>", name) // use player's name
                 let args, command
+
+                // exit on comments
+                if(line.startsWith("//")) return
+
                 if(line.startsWith('"')) {
                     args = [line]
                     command = "option"
@@ -137,10 +144,15 @@ class Scene {
     }
 
     option(args) {
-        let regex   = /(\".+\") (.+)/
+        let regex   = /(\".+\") (.+) ?(.*)? ?(.*)?/
         let groups  = regex.exec(args)
         let message = groups[1]
-        let scene   = groups[2]
+        
+        args = groups[2].split(" ")
+        
+        let scene = args[0]
+        let flag  = args[1]
+        let incr  = args[2]
 
         // create option element
         let option = document.createElement("div")
@@ -148,6 +160,22 @@ class Scene {
             option.innerText = message
 
         option.addEventListener("click", () => {
+            // update flags first
+            if(flag) {
+                flags[flag] ??= 0
+
+                // check for bool
+                if(incr == "true") {
+                    flags[flag] = true
+                } else if(incr == "false") {
+                    flags[flag] = false
+                } else {
+                    flags[flag] += parseFloat(incr) || 1 // 1 is default
+                }
+
+            }
+
+            // then proceed to scene
             this.scene(scene)
         })
 
