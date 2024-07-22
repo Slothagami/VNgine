@@ -160,26 +160,28 @@ class Scene {
             option.innerText = message
 
         option.addEventListener("click", () => {
-            // update flags first
-            if(flag) {
-                flags[flag] ??= 0
-
-                // check for bool
-                if(incr == "true") {
-                    flags[flag] = true
-                } else if(incr == "false") {
-                    flags[flag] = false
-                } else {
-                    flags[flag] += parseFloat(incr) || 1 // 1 is default
-                }
-
-            }
-
-            // then proceed to scene
+            this.flag(flag, incr)
             this.scene(scene)
         })
 
         this.options.appendChild(option)
+    }
+
+    flag(flag, incr) {
+        if(flag) {
+            flags[flag] ??= 0
+
+            // check for bool
+            if(incr == "true") {
+                flags[flag] = true
+            } else if(incr == "false") {
+                flags[flag] = false
+            } else {
+                flags[flag] += parseFloat(incr) || 1 // 1 is default
+            }
+
+        }
+        return false // don't pause dialog
     }
 
     character(name, args) {

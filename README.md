@@ -90,3 +90,7 @@ fades out current music and starts a new bgm track, filepath starts from `assets
 presents an option to the player and determines the scene to load if that option is picked, use many of these in sequence to list dialog options and their corresponding scenes to progress to.
 - flag: (string) name of global flag, will be created if it doesn't exist, initializes to 0
 - ammount: (float/bool) if given a float, incriments the flag value by that amount, if given a float, sets the flag to match.
+
+---
+## flag [flag_name] [value]
+changes a flag in the same way as a text option without needing a player choice, useful for setting multiple flags when triggering a scene
