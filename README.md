@@ -16,7 +16,7 @@ scene next_scene
 ```
 
 
-## general game controls
+## General Game Controls
 - press any key to progress
 - press `h` to hide/unhide the dialog box
 <br />
@@ -36,12 +36,12 @@ scene next_scene
 
 # Commands
 - you can use the keyword `<name>` in any command to substitute it for the player's chosen name.
-- you can specify comments with `//`
+- you can add comments with "`//`".
 
 ---
 ## [character] [property] [value]
-sets a property of the character's data. adds the character to the scene if they're not there already. supported properties include:
-- `image`: filepath starting from `assets/characters` 
+sets a property of the character's data. adds the character to the scene if they're not there. supported properties are:
+- `image`: file path relative to `assets/characters` 
 - `x`: float (percentage of screen width) default = 0.5
 - `y`: float (percentage of screen height) default = 1
 - `scale`: float (default = 1)
@@ -51,19 +51,23 @@ sets a property of the character's data. adds the character to the scene if they
 ---
 
 ## [character?]: [dialog?]
-Character speaking a line. both arguments are optional. a blank string `: [dialog]` gives no name to the speaker. The speaker does not need to be a character on the screen. you can also use just a colon `:` to set a break with no text that stops running commands and waits for input. You can also use `[character]:` to just display the character's name without them speaking
+Character speaking a line, both arguments are optional. 
+- The speaker does not need to be a character on the screen. 
+- Omitting the character argument gives no name to the speaker.  
+- Omitting the dialog argument displays the character's name without them speaking. 
+- Omitting both (using an empty line with a colon) sets a break with no text that pauses commands until the player clicks.
 
 ---
 ## exit [character]
-removes the characters image property so they are not on screen anymore. their data remains in the scene in case they reappear.
+removes the characters image property so they are not displayed on screen. Their data is not removed from the scene.
 
 ---
 ## background [path]
-crossfades to a new background. filepath starts from the `assets/backgrounds/` folder
+crossfades to a new background. File path relative to `assets/backgrounds/`.
 
 ---
 ## scene [file]
-loads a new scene. filepath starts from the `assets/scenes/` folder. omit the file extension
+loads a new scene. File name relative to `assets/scenes/` folder, **not including file extension**.
 
 ---
 ## dialogbox [position]
@@ -79,11 +83,11 @@ sets the dialog box position, supported values are:
 
 ---
 ## sound [file]
-play a sound effect, filepath starts from the `assets/audio/sounds/` folder
+play a sound effect. File path relative to `assets/audio/sounds/`.
 
 ---
 ## bgm [file]
-fades out current music and starts a new bgm track, filepath starts from `assets/audio/music/`
+fades out current music and starts a new bgm track. File path relative to `assets/audio/music/`.
 
 ---
 ## "[text option]" [scene name] [flag?] [amount=1?]
@@ -93,4 +97,4 @@ presents an option to the player and determines the scene to load if that option
 
 ---
 ## flag [flag_name] [value]
-changes a flag in the same way as a text option without needing a player choice, useful for setting multiple flags when triggering a scene
+changes a flag in the same way as a text option without needing a player choice, useful for setting multiple flags when triggering a scene.
