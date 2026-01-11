@@ -31,10 +31,39 @@ function load_scene(name) {
 
     document.body.appendChild(script)
     script.addEventListener("load", () => {
-        // scene = new Scene(SCRIPT)
         scene.actions = scene.parse_script(SCRIPT)
         scene.next()
     })
+}
+
+function parse_condition(string) {
+    if(string in flags) return flags[string] // return flag values
+    if(!isNaN(parseFloat(string))) return parseFloat(string) // return numbers
+
+    // check for comparisons (only supports simple comparisons)
+    let tokens = string.split(" ")
+    let a = tokens[0] 
+    let operation = tokens[1] 
+    let b = tokens[2] 
+
+    switch(operation) {
+        case ">":
+            return parse_condition(a) > parse_condition(b)
+            
+        case "<":
+            return parse_condition(a) < parse_condition(b)
+
+        case ">=":
+            return parse_condition(a) >= parse_condition(b)
+
+        case "<=":
+            return parse_condition(a) <= parse_condition(b)
+
+        case "=": 
+        case "==": // support both conventions
+            return parse_condition(a) == parse_condition(b)
+
+    }
 }
 
 class Scene {
@@ -73,12 +102,12 @@ class Scene {
         let current_char = this.target_text.charAt(this.visible_chars-1)
         let next_char    = this.target_text.charAt(this.visible_chars)
         let punctuation = {
-            ".": .04,
-            "?": .04,
-            "!": .04,
-            ",": .05,
-            "-": .05,
-            ":": .05,
+            ".": .08,
+            "?": .08,
+            "!": .08,
+            ",": .08,
+            "-": .08,
+            ":": .08,
             ";": .1,
             "*":  1, // so it works properly when an asterisked message has a period
         }
@@ -175,7 +204,13 @@ class Scene {
             } else if(incr == "false") {
                 flags[flag] = false
             } else {
-                flags[flag] += parseFloat(incr) || 1 // 1 is default
+                incr = parseFloat(incr)
+                if(incr == NaN) {
+                    flags[flag] += 1 // 1 is default
+                } else {
+                    flags[flag] += incr
+                }
+
             }
 
         }
