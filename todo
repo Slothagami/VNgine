@@ -1,0 +1,3 @@
+- make if blocks that work for flags (to have alt. parts in a scene based on previous interactions)
+    - make if command
+- allow spaces in character names
