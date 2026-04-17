@@ -70,7 +70,7 @@ body {
     transform: translate(-50%, 0px);
 }
 
-#name, #text {
+/* #name, #text {
     width: 45vw;
     margin: auto;
 }
@@ -82,4 +82,4 @@ body {
     height: 15vh;
     box-sizing: border-box;
     background-color: #000000af;
-}
+} */
