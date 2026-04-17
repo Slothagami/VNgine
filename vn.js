@@ -80,6 +80,7 @@ class Scene {
         this.overlay       = document.querySelector("#overlay")
         this.target_text   = ""
         this.visible_chars = 0
+        this.dialog_box_position = "default"
 
         this.bgm_audio = new Audio()
         this.bgm_audio.loop = true
@@ -230,7 +231,7 @@ class Scene {
             if(args.length == 0) {
                 this.dialog_box.style.display = "none"
             } else {
-                this.dialog_box.style.display = "block"
+                this.dialog_box.style.display = this.dialog_box_position=="low"? "flex": "block"
             }
 
             // replace asterisks with <em> tags. assume they come in pairs
@@ -335,6 +336,7 @@ class Scene {
                 dbox.width  = "100%"
                 dbox.height = "20vh"
                 dbox.inset  = "auto auto 0 0"
+                this.dialog_box_position = "default"
                 break
 
             case "low":
@@ -345,10 +347,13 @@ class Scene {
                 dbox.height  = "8vh"
                 dbox.inset   = "auto auto 0 0"
                 dbox.display = "flex"
+
+                this.dialog_box_position = "low"
                 break
 
             case "hidden":
                 dbox.display = "none"
+                this.dialog_box_position = "hidden"
                 break
 
             case "right":
@@ -358,6 +363,8 @@ class Scene {
                 dbox.width  = "37%"
                 dbox.height = "100vh"
                 dbox.inset   = "0 63%"
+
+                this.dialog_box_position = "right"
                 break
 
             case "left":
@@ -367,6 +374,8 @@ class Scene {
                 dbox.width  = "37%"
                 dbox.height = "100vh"
                 dbox.inset   = "0"
+
+                this.dialog_box_position = "left"
                 break
 
             case "bottomleft":
@@ -376,6 +385,8 @@ class Scene {
                 dbox.width  = "37%"
                 dbox.height = "22vh"
                 dbox.inset   = "auto auto 0 0"
+
+                this.dialog_box_position = "bottomleft"
                 break
 
             case "bottomright":
@@ -385,6 +396,8 @@ class Scene {
                 dbox.width  = "37%"
                 dbox.height = "22vh"
                 dbox.inset   = "auto 0 0 auto"
+
+                this.dialog_box_position = "bottomright"
                 break
 
             case "center":
@@ -392,6 +405,8 @@ class Scene {
                 dbox.width  = "100%"
                 dbox.height = "80vh"
                 dbox.inset  = "10% 0"
+
+                this.dialog_box_position = "large"
                 break
         }
     }
