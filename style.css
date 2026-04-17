@@ -61,8 +61,6 @@ body {
     padding-right: 1em;
 }
 
-div#name {}
-
 .character-img {
     position: absolute;
     bottom: 0;
@@ -70,4 +68,18 @@ div#name {}
     height: 100%;
     left: 50%;
     transform: translate(-50%, 0px);
+}
+
+#name, #text {
+    width: 45vw;
+    margin: auto;
+}
+
+#dialog {
+    border-radius: 10vh;
+    margin: 5vh 20vw;
+    width: calc(100vw - 2 * 20vw);
+    height: 15vh;
+    box-sizing: border-box;
+    background-color: #000000af;
 }

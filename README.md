@@ -34,6 +34,14 @@ scene next_scene
     /scenes
 ```
 
+# Global Config
+To load your game files, add a file called `config.js` to the main folder of this repository, and include the following variables as aproproate for your game
+```
+var player_name   = "slotha"
+var assets_folder = "../example_game_assets" // absolute path or relative to root of the repo
+var game_start    = "introduction" // file name of the first scene in the game, or path relative to scenes folder excluding extension
+```
+
 # Commands
 - you can use the keyword `<name>` in any command to substitute it for the player's chosen name.
 - you can add comments with "`//`".
