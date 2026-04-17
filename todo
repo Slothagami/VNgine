@@ -1,3 +1,5 @@
 - make if blocks that work for flags (to have alt. parts in a scene based on previous interactions)
     - make if command
 - allow spaces in character names
+- add GUI page to make it more user friendly
+- add [Tauri Transpiler](https://v2.tauri.app) to produce an exe at the end, and invoke it with the GUI
