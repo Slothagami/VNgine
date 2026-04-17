@@ -55,6 +55,7 @@ sets a property of the character's data. adds the character to the scene if they
 - `scale`: float (default = 1)
 - `color`: CSS Color string, color of the characters name in the dialog box
 - `animtime`: number of seconds to complete an animation (such as moving to a new position)
+- `direction`: either `normal` or `flipped`. determines the direction the sprite is facing
 
 ---
 
@@ -72,6 +73,11 @@ removes the characters image property so they are not displayed on screen. Their
 ---
 ## background [path]
 crossfades to a new background. File path relative to `assets/backgrounds/`.
+
+---
+## fade [in/out] [time?]
+fade in or out to black. `fade out` will fade to black and `fade in` will return to the scene. 
+the `time` parameter determines the length of the fade in seconds, and defaults to 0.25
 
 ---
 ## scene [file]

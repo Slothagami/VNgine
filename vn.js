@@ -81,8 +81,6 @@ class Scene {
         this.target_text   = ""
         this.visible_chars = 0
 
-        this.fade = 1
-
         this.bgm_audio = new Audio()
         this.bgm_audio.loop = true
     }
@@ -407,6 +405,19 @@ class Scene {
         this.cross_fade_bgm(file)
     }
 
+    fade(direction, time=.25) {
+        if(direction == "out") {
+            new Fade(time, perc => {
+                scene.overlay.style.opacity = 100 * perc + "%"
+            })
+        }
+        if(direction == "in") {
+            new Fade(time, perc => {
+                scene.overlay.style.opacity = 100 * (1-perc) + "%"
+            })
+        }
+    }
+
     cross_fade_bgm(new_song, time=4) {
         if(this.bgm_audio.src != "") {
             new Fade(time, perc => {
@@ -461,11 +472,11 @@ const lerp = (a, b, p) => (b-a)*p + a
 
 class Fade {
     constructor(seconds, func, onend=()=>{}, interval=24) {
-        this.func = func
+        this.func  = func
         this.onend = onend
         this.count = 0
         this.max_count = interval * seconds
-        this.interval = 1000 / interval
+        this.interval  = 1000 / interval // 24 fps
         setTimeout(() => {this.update()}, this.interval)
     }
 
