@@ -72,7 +72,7 @@ function parse_condition(string) {
 
 class Scene {
     constructor() {
-        this.characters    = {"": {animtime: .5, color: "white"}} // include the protagonist as a character
+        this.characters    = {"": {animtime: .5, color: "white"}} // include the narrator as a character
         this.dialog        = document.querySelector("#text")
         this.dialog_box    = document.querySelector("#dialog")
         this.name          = document.querySelector("#name")
@@ -93,6 +93,7 @@ class Scene {
             if(data.hasOwnProperty("image")) {
                 data.image.style.left = data.x * 100 + "%"
                 data.image.style.top  = data.y * 100 + "%"
+                data.image.style.transform = `translate(-50%, 0px) scaleX(${data.direction == "flipped"? -1: 1})`
                 if(data.hasOwnProperty("scale")) {
                     data.image.style.height = data.scale * 100 + "%"
                 }
@@ -257,7 +258,7 @@ class Scene {
             args = args.join(" ")
 
             if(!this.characters.hasOwnProperty(name)) {
-                this.characters[name] = {x: .5, y: 0, color: "white", scale: 1}
+                this.characters[name] = {x: .5, y: 0, color: "white", scale: 1, direction: "normal"}
 
                 // preload images?
             }
