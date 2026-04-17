@@ -55,7 +55,7 @@ Character speaking a line, both arguments are optional.
 - The speaker does not need to be a character on the screen. 
 - Omitting the character argument gives no name to the speaker.  
 - Omitting the dialog argument displays the character's name without them speaking. 
-- Omitting both (using an empty line with a colon) sets a break with no text that pauses commands until the player clicks.
+- Omitting both (using an empty line with a colon) hides the dialog box and pauses commands until the next input. (useful for showing CGs with no text overlay)
 
 ---
 ## exit [character]
@@ -87,7 +87,7 @@ play a sound effect. File path relative to `assets/audio/sounds/`.
 
 ---
 ## bgm [file]
-fades out current music and starts a new bgm track. File path relative to `assets/audio/music/`.
+fades out current music and starts a new bgm track. File path relative to `assets/audio/music/`. volume is from 0 to 1.
 
 ---
 ## "[text option]" [scene name] [flag?] [amount=1?]

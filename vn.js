@@ -14,6 +14,10 @@ window.addEventListener("load", () => {
         }
     })
 
+    document.body.addEventListener("click", () => {
+        scene.next()
+    })
+
     scene = new Scene()
     load_scene(game_start) 
 
@@ -114,7 +118,7 @@ class Scene {
         let ignore_list = Object.keys(punctuation) + ['"']
 
         if(!ignore_list.includes(next_char)) {
-            this.visible_chars += punctuation[current_char] || .7
+            this.visible_chars += punctuation[current_char] || 1.1
         } else {
             this.visible_chars++
         }
@@ -223,6 +227,19 @@ class Scene {
             name = name.replace(":","")
             let dialog = args.join(" ")
 
+            // hide the dialog box if the dialog is empty
+            if(args.length == 0) {
+                this.dialog_box.style.display = "none"
+            } else {
+                this.dialog_box.style.display = "block"
+            }
+
+            // replace asterisks with <em> tags. assume they come in pairs
+            // while(dialog.includes("*")) {
+            //     dialog = dialog.replace("*", "<em>")
+            //     dialog = dialog.replace("*", "</em>")
+            // }
+
             this.name.innerText = name
 
             if(this.characters.hasOwnProperty(name)) {
@@ -290,7 +307,7 @@ class Scene {
     // Actions 
     background(image) {
         this.cross_fade_bg(image)
-        return true
+        return false
     }
 
     scene(name) {
