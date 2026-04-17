@@ -445,7 +445,7 @@ class Scene {
     }
 
     // other
-    cross_fade_bg(new_bg, time=1) {
+    cross_fade_bg(new_bg, time=2) {
         if(document.body.style.backgroundImage != "") {
             new Fade(time/2, perc => {
                     // fade out current scene
