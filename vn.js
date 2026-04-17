@@ -407,6 +407,7 @@ class Scene {
 
     fade(direction, time=.25) {
         if(direction == "out") {
+            scene.overlay.style.zIndex = 1 // override background changes that need to fade over the text also
             new Fade(time, perc => {
                 scene.overlay.style.opacity = 100 * perc + "%"
             })
@@ -414,7 +415,7 @@ class Scene {
         if(direction == "in") {
             new Fade(time, perc => {
                 scene.overlay.style.opacity = 100 * (1-perc) + "%"
-            })
+            }, () => {scene.overlay.style.zIndex=20})
         }
     }
 
