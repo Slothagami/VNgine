@@ -33,13 +33,22 @@ scene next_scene
     /scenes
 ```
 
-# Global Config
-To load your game files, add a file called `config.js` to the main folder of this repository, and include the following variables as aproproate for your game
+# Getting Started
+## Global Config
+To load your game files into the engine, add a file called `config.js` to the main folder of this repository, and include the following variables as aproproate for your game
 ```
 var player_name   = "slotha"
 var assets_folder = "../example_game_assets" // absolute path or relative to root of the repo
 var game_start    = "introduction" // file name of the first scene in the game, or path relative to scenes folder excluding extension
 ```
+
+## Running the Game
+Before you run the game, you first need to start a server. Assuming you have python installed, you can run
+```
+python -m http.server
+```
+in the root folder containing both this libary and your game files. you can then access the game (by default) by accessing `localhost:8000/VNgine/index.html` on your browser.
+
 
 # Commands
 - you can use the keyword `<name>` in any command to substitute it for the player's chosen name.
