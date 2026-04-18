@@ -412,7 +412,7 @@ class Scene {
     }
 
     sound(file) {
-        let sound = new Audio(`${assets_folder}/audio/sounds/${file}`)
+        let sound = new Audio(`${assets_folder}/sounds/${file}`)
             sound.play()
     }
 
@@ -454,7 +454,7 @@ class Scene {
 
     play_track(name) {
         if(name == "none" || name == "stop") this.bgm_audio.pause()
-        this.bgm_audio.src = `${assets_folder}/audio/music/${name}`
+        this.bgm_audio.src = `${assets_folder}/music/${name}`
         this.bgm_audio.currentTime = 0
         this.bgm_audio.play()
     }

@@ -26,9 +26,8 @@ scene next_scene
 # Folder structure
 ```
 /assets
-    /audio
-        /music
-        /sounds
+    /music
+    /sounds
     /backgrounds
     /characters
     /scenes
@@ -97,11 +96,11 @@ sets the dialog box position, supported values are:
 
 ---
 ## sound [file]
-play a sound effect. File path relative to `assets/audio/sounds/`.
+play a sound effect. File path relative to `assets/sounds/`.
 
 ---
 ## bgm [file]
-fades out current music and starts a new bgm track. File path relative to `assets/audio/music/`. volume is from 0 to 1.
+fades out current music and starts a new bgm track. File path relative to `assets/music/`. volume is from 0 to 1.
 
 ---
 ## "[text option]" [scene name] [flag?] [amount=1?]
