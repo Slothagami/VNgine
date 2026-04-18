@@ -79,8 +79,8 @@ fade in or out to black. `fade out` will fade to black and `fade in` will return
 the `time` parameter determines the length of the fade in seconds, and defaults to 0.25
 
 ---
-## scene [file]
-loads a new scene. File name relative to `assets/scenes/` folder, **not including file extension**.
+## scene [file] [volume=100?]
+loads a new scene. File name relative to `assets/scenes/` folder, **not including file extension**. Volume is a percentage from 0-100
 
 ---
 ## dialogbox [position]

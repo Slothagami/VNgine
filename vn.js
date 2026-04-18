@@ -411,8 +411,11 @@ class Scene {
         }
     }
 
-    sound(file) {
+    sound(file, volume=100) {
+        volume /= 100
+
         let sound = new Audio(`${assets_folder}/sounds/${file}`)
+            sound.volume = volume
             sound.play()
     }
 
