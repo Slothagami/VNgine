@@ -79,8 +79,8 @@ fade in or out to black. `fade out` will fade to black and `fade in` will return
 the `time` parameter determines the length of the fade in seconds, and defaults to 0.25
 
 ---
-## scene [file] [volume=100?]
-loads a new scene. File name relative to `assets/scenes/` folder, **not including file extension**. Volume is a percentage from 0-100
+## scene [file]
+loads a new scene. File name relative to `assets/scenes/` folder, **not including file extension**. 
 
 ---
 ## dialogbox [position]
@@ -95,8 +95,8 @@ sets the dialog box position, supported values are:
 - `center` or `large`
 
 ---
-## sound [file]
-play a sound effect. File path relative to `assets/sounds/`.
+## sound [file] [volume=100?] [panning?]
+play a sound effect. File path relative to `assets/sounds/`. Volume is a percentage from 0-100. Panning  is a number from `-1` to `1`, with `-1` representing fully left, `1` representing fully right, and `0` is centered.
 
 ---
 ## bgm [file]

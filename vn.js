@@ -411,12 +411,25 @@ class Scene {
         }
     }
 
-    sound(file, volume=100) {
+    sound(file, volume=100, panning=0) {
         volume /= 100
 
-        let sound = new Audio(`${assets_folder}/sounds/${file}`)
+        let audio_ctx    = new AudioContext()
+        let sound        = new Audio(`${assets_folder}/sounds/${file}`)
             sound.volume = volume
-            sound.play()
+
+        let track  = audio_ctx.createMediaElementSource(sound)
+        let panner = audio_ctx.createStereoPanner()
+        
+        track.connect(panner).connect(audio_ctx.destination)
+        panner.pan.value = panning
+
+        sound.onended = () => {
+            track.disconnect()
+            panner.disconnect()
+        }
+        
+        sound.play()
     }
 
     bgm(file) {
